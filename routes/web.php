@@ -24,20 +24,10 @@ Route::post('/', function() {
 		return view('resultat')->with('shortened',$UrlFound->shortened);
 	} 
 
-	function getUniqueShortUrl(){
-		$shortened= str_random(5);
-		if (Url::where('shortened', $shortened)->count()> 0){
-
-			return getUniqueShortUrl();
-		}
-
-		return $shortened;
-
-	}
-
+	
 	$CreateUrl=Url::create([
 		'url'=>request('url'),
-		'shortened'=>getUniqueShortUrl(),
+		'shortened'=>Url::getUniqueShortUrl(),
 		]);
 
 	if ($CreateUrl) {
