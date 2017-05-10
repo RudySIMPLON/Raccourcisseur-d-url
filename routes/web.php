@@ -1,4 +1,5 @@
 <?php
+ use App\Url;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,16 @@ Route::get('/', function () {
 });
 
 Route::post('/', function() {
-	dd(request('url'));
+	$UrlFound = Url::where('url', request('url'))->first();
+
+	if($UrlFound) {
+
+	return view('resultat')->with('shortened',$UrlFound->shortened);
+
+	} else{ dd("error");
+
+}
+
+
 });
 
