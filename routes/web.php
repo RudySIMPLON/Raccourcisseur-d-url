@@ -43,7 +43,7 @@ Route::post('/', function() {
 	if ($CreateUrl) {
 		return view('resultat')->with('shortened', $CreateUrl->shortened);
 	}else {
-		dd("error");
+		dd("errorr");
 	}
 
 
