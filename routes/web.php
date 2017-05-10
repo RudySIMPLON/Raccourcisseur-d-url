@@ -20,13 +20,20 @@ Route::post('/', function() {
 	$UrlFound = Url::where('url', request('url'))->first();
 
 	if($UrlFound) {
-
-	return view('resultat')->with('shortened',$UrlFound->shortened);
-
+		return view('resultat')->with('shortened',$UrlFound->shortened);
 	} 
-
-
-
-
 });
+
+Route::get('/{shortened}', function ($shortened) {
+	
+	$UrlShortFound = Url::where('shortened', $shortened)->first();
+	
+	if(!$UrlShortFound){
+		return redirect ('/');
+	} else{
+		return redirect($UrlShortFound->url);
+		
+	} 
+});
+
 
