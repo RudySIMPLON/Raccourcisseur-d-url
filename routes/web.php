@@ -23,9 +23,9 @@ Route::post('/', function() {
 
 	return view('resultat')->with('shortened',$UrlFound->shortened);
 
-	} else{ dd("error");
+	} 
 
-}
+
 
 
 });
