@@ -26,16 +26,25 @@ Route::post('/', function() {
 
 	function getUniqueShortUrl(){
 		$shortened= str_random(5);
+		if (Url::where('shortened', $shortened)->count()> 0){
+
+			return getUniqueShortUrl();
+		}
 
 		return $shortened;
 
 	}
 
-	Url::create([
+	$CreateUrl=Url::create([
 		'url'=>request('url'),
 		'shortened'=>getUniqueShortUrl(),
-
 		]);
+
+	if ($CreateUrl) {
+		return view('resultat')->with('shortened', $CreateUrl->shortened);
+	}else {
+		dd("error");
+	}
 
 
 
