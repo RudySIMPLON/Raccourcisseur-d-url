@@ -1,5 +1,5 @@
 <?php
- use App\Url;
+use App\Url;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,22 +13,39 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('welcome');
 });
 
 Route::post('/', function() {
+
 	$UrlFound = Url::where('url', request('url'))->first();
 
 	if($UrlFound) {
 		return view('resultat')->with('shortened',$UrlFound->shortened);
 	} 
+
+	function getUniqueShortUrl(){
+		$shortened= str_random(5);
+
+		return $shortened;
+
+	}
+
+	Url::create([
+		'url'=>request('url'),
+		'shortened'=>getUniqueShortUrl(),
+
+		]);
+
+
+
 });
 
 Route::get('/{shortened}', function ($shortened) {
 	
 	$UrlShortFound = Url::where('shortened', $shortened)->first();
 	
-	if(!$UrlShortFound){
+	if(! $UrlShortFound){
 		return redirect ('/');
 	} else{
 		return redirect($UrlShortFound->url);
