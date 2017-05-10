@@ -26,7 +26,7 @@ class AddUniqueConstraintOnShortenedInUrlsTable extends Migration
     public function down()
     {
         Schema::table('urls', function (Blueprint $table) {
-            
+            $table->dropUnique("urls_shortened_unique");
         });
     }
 }
