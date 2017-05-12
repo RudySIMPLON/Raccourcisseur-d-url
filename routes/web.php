@@ -17,8 +17,13 @@ Route::get('/', function () {
 });
 
 Route::post('/', function() {
+	$url =request('url');
 
-	$UrlFound = Url::where('url', request('url'))->first();
+
+	Validator::make(compact('url'), ['url' =>'required|url'])->validate();
+
+
+	$UrlFound = Url::where('url', $url)->first();
 
 	if($UrlFound) {
 		return view('resultat')->with('shortened',$UrlFound->shortened);
@@ -26,7 +31,7 @@ Route::post('/', function() {
 
 	
 	$CreateUrl=Url::create([
-		'url'=>request('url'),
+		'url'=>$url,
 		'shortened'=>Url::getUniqueShortUrl(),
 		]);
 
